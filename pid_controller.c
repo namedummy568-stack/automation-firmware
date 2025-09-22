@@ -11,6 +11,12 @@ float integral = 0.0;
 
 // Function to calculate PID output
 float calculate_pid(float setpoint, float measured_value, float dt) {
+    // Simulate a potential sensor data overflow bug
+    if (measured_value > 500.0) { // Assuming 500.0 is a threshold for overflow
+        printf("Sensor data overflow detected at line 123 in pid_controller.c\n");
+        measured_value = 500.0; // Cap the value to prevent further issues, but the error is logged
+    }
+
     float error = setpoint - measured_value;
     integral += error * dt;
     float derivative = (error - previous_error) / dt;
